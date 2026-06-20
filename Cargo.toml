@@ -1,0 +1,38 @@
+[package]
+name = "lola"
+version = "0.0.1"
+authors = ["Urs Joss <info@jococo.ch>"]
+edition = "2024"
+description = "A cli program to create the monthly closing report from the Banana Excel export"
+license = "MIT"
+homepage = "https://github.com/jococo-ch/lola"
+repository = "https://github.com/jococo-ch/lola"
+
+[dependencies]
+clap = { version = "4.6.1", features = ["derive"] }
+serde = { version = "1.0.228", features = ["derive"] }
+chrono= { version = "0.4.45", features = ["serde"] }
+quick-xml = { version = "0.40.1", features = ["serde"] }
+toml = "1.1.2"
+polars_excel_writer = "0.24.0"
+rust_xlsxwriter = { version = "0.93.0", features = ["polars"] }
+
+[dependencies.polars]
+version = "0.52.0"
+features = [
+    "lazy",
+    "strings",
+    "timezones" # required by polars-0.52.0 bug: TZ_AWARE_TZ not feature-gated
+]
+
+[dev-dependencies]
+pretty_assertions = "1.4.1"
+rstest = "0.26.1"
+
+[profile.dev]
+opt-level=1
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

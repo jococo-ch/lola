@@ -1,0 +1,37 @@
+name: Verify
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+  workflow_dispatch:
+
+# All premissions denied on workflow level
+permissions: {}
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  verify:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          prefix-key: "v6-rust"
+
+      - name: Set up Homebrew
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "HOMEBREW_PREFIX=$(/home/linuxbrew/.linuxbrew/bin/brew --prefix)" >> $GITHUB_ENV
+          echo "$(/home/linuxbrew/.linuxbrew/bin/brew --prefix)/bin" >> $GITHUB_PATH
+      - name: install just
+        run: /home/linuxbrew/.linuxbrew/bin/brew install just
+
+      - run: just verify
