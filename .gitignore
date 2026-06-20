@@ -1,0 +1,8 @@
+/target
+.idea
+20230301-0000_20230330-1041-sales_report.csv
+*.csv
+*.xlsx
+.~lock.*
+workdir/
+.zed/
