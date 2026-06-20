@@ -18,7 +18,7 @@ polars_excel_writer = "0.24.0"
 rust_xlsxwriter = { version = "0.93.0", features = ["polars"] }
 
 [dependencies.polars]
-version = "0.52.0"
+version = "0.54.4"
 features = [
     "lazy",
     "strings",
