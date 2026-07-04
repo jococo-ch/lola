@@ -12,7 +12,7 @@ repository = "https://github.com/jococo-ch/lola"
 clap = { version = "4.6.1", features = ["derive"] }
 serde = { version = "1.0.228", features = ["derive"] }
 chrono= { version = "0.4.45", features = ["serde"] }
-quick-xml = { version = "0.40.1", features = ["serde"] }
+quick-xml = { version = "0.41.0", features = ["serde"] }
 toml = "1.1.2"
 polars_excel_writer = "0.24.0"
 rust_xlsxwriter = { version = "0.93.0", features = ["polars"] }
