@@ -1349,7 +1349,7 @@ dependencies = [
  "pretty_assertions",
  "quick-xml 0.41.0",
  "rstest",
- "rust_xlsxwriter",
+ "rust_xlsxwriter 0.97.1",
  "serde",
  "toml",
 ]
@@ -2261,7 +2261,7 @@ dependencies = [
  "chrono",
  "polars",
  "polars-arrow",
- "rust_xlsxwriter",
+ "rust_xlsxwriter 0.96.0",
 ]
 
 [[package]]
@@ -2708,7 +2708,17 @@ dependencies = [
  "chrono",
  "polars",
  "ssfmt",
- "zip",
+ "zip 7.2.0",
+]
+
+[[package]]
+name = "rust_xlsxwriter"
+version = "0.97.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "210c9bee5c2d1df2c3a4fa1fccf3647a37bea205a35d5775491731b271bff19b"
+dependencies = [
+ "polars",
+ "zip 8.6.0",
 ]
 
 [[package]]
@@ -4064,6 +4074,20 @@ name = "zip"
 version = "7.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c42e33efc22a0650c311c2ef19115ce232583abbe80850bc8b66509ebef02de0"
+dependencies = [
+ "crc32fast",
+ "flate2",
+ "indexmap",
+ "memchr",
+ "typed-path",
+ "zopfli",
+]
+
+[[package]]
+name = "zip"
+version = "8.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2d04a6b5381502aa6087c94c669499eb1602eb9c5e8198e534de571f7154809b"
 dependencies = [
  "crc32fast",
  "flate2",

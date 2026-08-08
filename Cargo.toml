@@ -15,7 +15,7 @@ chrono= { version = "0.4", features = ["serde"] }
 quick-xml = { version = "0.41", features = ["serde"] }
 toml = "1.1"
 polars_excel_writer = "0.26"
-rust_xlsxwriter = { version = "0.96", features = ["polars"] }
+rust_xlsxwriter = { version = "0.97", features = ["polars"] }
 
 [dependencies.polars]
 version = "0.54"
