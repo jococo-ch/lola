@@ -46,10 +46,10 @@ fn read_xml(input_path: &Path) -> Result<DataFrame, Box<dyn Error>> {
     loop {
         match reader.read_event_into(&mut buf) {
             Ok(Event::Start(ref e)) => match e.name().as_ref() {
-                b"Worksheet" => {
+                "Worksheet" => {
                     for attr in e.attributes().flatten() {
-                        if attr.key.as_ref() == b"ss:Name" {
-                            let raw_value = str::from_utf8(attr.value.as_ref())?;
+                        if attr.key.as_ref() == "ss:Name" {
+                            let raw_value = attr.value.as_ref();
                             let unescaped_value = unescape(raw_value)?;
                             if unescaped_value == Sheet::Journal.name() {
                                 in_sheet = true;
@@ -57,10 +57,10 @@ fn read_xml(input_path: &Path) -> Result<DataFrame, Box<dyn Error>> {
                         }
                     }
                 }
-                b"Cell" => {
+                "Cell" => {
                     for attr in e.attributes().flatten() {
-                        if attr.key.as_ref() == b"ss:Index" {
-                            let raw_value = str::from_utf8(attr.value.as_ref())?;
+                        if attr.key.as_ref() == "ss:Index" {
+                            let raw_value = attr.value.as_ref();
                             let unescaped_value = unescape(raw_value)?;
                             index = Some(unescaped_value.parse::<u32>()?);
                             in_cell = in_sheet;
@@ -70,13 +70,13 @@ fn read_xml(input_path: &Path) -> Result<DataFrame, Box<dyn Error>> {
                 _ => {}
             },
             Ok(Event::End(ref e)) => match e.name().as_ref() {
-                b"Worksheet" => {
+                "Worksheet" => {
                     cell_value.clear();
                     in_sheet = false;
                     in_cell = false;
                     row.clear();
                 }
-                b"Cell" => {
+                "Cell" => {
                     if in_cell {
                         if let Some(i) = index {
                             row.insert(i, cell_value.clone());
@@ -84,7 +84,7 @@ fn read_xml(input_path: &Path) -> Result<DataFrame, Box<dyn Error>> {
                         in_cell = false;
                     }
                 }
-                b"Row" if in_sheet => {
+                "Row" if in_sheet => {
                     let date_index = JournalColumn::Date as u32;
                     let description_index = JournalColumn::Description as u32;
                     let debit_index = JournalColumn::Debit as u32;
@@ -121,7 +121,7 @@ fn read_xml(input_path: &Path) -> Result<DataFrame, Box<dyn Error>> {
             },
             Ok(Event::Text(e)) => {
                 if in_sheet && in_cell {
-                    cell_value = e.decode()?.into_owned();
+                    cell_value = e.as_ref().into();
                 }
             }
             Ok(Event::Eof) => break,
